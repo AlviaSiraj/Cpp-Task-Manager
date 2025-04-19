@@ -1,0 +1,17 @@
+{
+  "label": "build sfml app",
+  "type": "shell",
+  "command": "C:/msys64/mingw64/bin/g++.exe",
+  "args": [
+    "main.cpp",
+    "-o",
+    "TimeManager",
+    "-IC:/msys64/mingw64/include",
+    "-LC:/msys64/mingw64/lib",
+    "-lsfml-graphics",
+    "-lsfml-window",
+    "-lsfml-system"
+  ],
+  "problemMatcher": ["$gcc"]
+}
+
