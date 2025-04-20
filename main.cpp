@@ -124,10 +124,12 @@ int main()
     // cursor control
     sf::Cursor arrowCursor;
     sf::Cursor handCursor;
+    sf::Cursor textCursor;
 
     // Load system cursors
     if (!arrowCursor.loadFromSystem(sf::Cursor::Arrow) ||
-        !handCursor.loadFromSystem(sf::Cursor::Hand))
+        !handCursor.loadFromSystem(sf::Cursor::Hand) ||
+        !textCursor.loadFromSystem(sf::Cursor::Text))
     {
         throw runtime_error("Error loading cursor");
     }
@@ -232,10 +234,27 @@ int main()
         }
         // update cursor
         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        window.setMouseCursor(addTaskButton.getGlobalBounds().contains(mousePos) ||
-                                      (showPopup && closeButton.getGlobalBounds().contains(mousePos)) || (showPopup && okButton.getGlobalBounds().contains(mousePos))
-                                  ? handCursor
-                                  : arrowCursor);
+        if (taskInputBox.getGlobalBounds().contains(mousePos) ||
+            descInputBox.getGlobalBounds().contains(mousePos))
+        {
+            window.setMouseCursor(textCursor);
+        }
+        else if (addTaskButton.getGlobalBounds().contains(mousePos) ||
+                 (showPopup && closeButton.getGlobalBounds().contains(mousePos)) ||
+                 (showPopup && okButton.getGlobalBounds().contains(mousePos)))
+        {
+            window.setMouseCursor(handCursor);
+        }
+        else
+        {
+            window.setMouseCursor(arrowCursor);
+        }
+
+        if (typingTask)
+        {
+            taskInputBox.setOutlineColor(sf::Color::Blue);
+        }
+
         // Update timer
         timer.setString("00:00:00");
 
